@@ -1,10 +1,23 @@
 #pragma once
 
 #include "mainwin.h"
+#include "basicerror.h"
 
 class WindowClass {
+public:
+	class Exception : public BasicError{
+	public:
+		Exception(int, const char*, HRESULT) noexcept;
+		const char* what() const noexcept override;
+		virtual const char* GetType() const noexcept;
+		static std::string TranslateErrorCode(HRESULT) noexcept;
+		HRESULT GetErrorCode() const noexcept;
+		std::string GetErrorString() const noexcept;
+	private:
+		HRESULT hr;
+	};
 private:
-	//nested class handles window startup
+	//singleton pattern handles window startup
 	class SingleWindow {
 	public:
 		static const wchar_t* GetName() noexcept;
@@ -30,3 +43,6 @@ private:
 	int height;
 	HWND hwnd;
 };
+
+//helper macro for error exception
+#define WND_EXCEPT(hr) WindowClass::Exception( __LINE__, __FILE__, hr)

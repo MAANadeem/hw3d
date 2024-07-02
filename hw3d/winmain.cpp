@@ -12,18 +12,28 @@ The second is a function call to actually make a window
 */
 
 int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-	
-	WindowClass wnd(600, 400, L"Hardware 3D");
-	MSG msg;
-	BOOL gResult;
-	while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0) {
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+	try {
+		WindowClass wnd(600, 400, L"Hardware 3D");
+		MSG msg;
+		BOOL gResult;
+		while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0) {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		//if getmessage itself fails
+		if (gResult == -1) {
+			return -1;
+		}
+		//value passed to PostQuitMessage
+		return (int)msg.wParam;
 	}
-	//if getmessage itself fails
-	if (gResult == -1) {
-		return -1;
+	catch (const BasicError& e) {
+		MessageBoxA(nullptr, e.what(), e.GetType(), MB_OK);
 	}
-	//value passed to PostQuitMessage
-	return (int)msg.wParam;
+	catch (const std::exception& e) {
+		MessageBoxA(nullptr, e.what(), "Standard Exception", MB_OK);
+	}
+	catch (...) {
+		MessageBoxA(nullptr, "No details", "Unknown Exception", MB_OK);
+	}
 }

@@ -1,4 +1,36 @@
 #include "windowclass.h"
+#include <stdlib.h>
+
+WindowClass::Exception::Exception(int line, const char* file, HRESULT hr) noexcept
+	: BasicError(line, file), hr(hr) {}
+const char* WindowClass::Exception::GetType() const noexcept { return "Window Exception"; }
+HRESULT WindowClass::Exception::GetErrorCode() const noexcept { return hr; }
+std::string WindowClass::Exception::GetErrorString() const noexcept { return TranslateErrorCode(hr); }
+
+const char* WindowClass::Exception::what() const noexcept {
+	std::ostringstream oss;
+	oss << GetType() << std::endl;
+	oss << "ERROR CODE: " << GetErrorCode() << std::endl;
+	oss << "DESCRIPTION: " << GetErrorString() << std::endl;
+	oss << GetOriginString();
+	whatBuffer = oss.str();
+	return whatBuffer.c_str();
+}
+
+std::string WindowClass::Exception::TranslateErrorCode(HRESULT hr) noexcept {
+	LPVOID lpMsgBuf = nullptr;
+	DWORD dwFormatFlags = FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
+		FORMAT_MESSAGE_IGNORE_INSERTS;
+	DWORD msgLen = FormatMessageW(dwFormatFlags, nullptr, hr,
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+		(LPWSTR)lpMsgBuf, 0, nullptr);
+	if (msgLen == 0) return "Unidentified Error Code";
+	std::wstring ws = (LPWSTR)lpMsgBuf;
+	std::string errorMsg(ws.begin(), ws.end());
+	LocalFree(lpMsgBuf);
+	return errorMsg;
+}
 
 //singleton design pattern requirement
 WindowClass::SingleWindow WindowClass::SingleWindow::win;
@@ -29,7 +61,7 @@ HINSTANCE WindowClass::SingleWindow::GetInstance() noexcept {
 	return win.hInst;
 }
 
-WindowClass::WindowClass(int width, int height, const wchar_t* name) noexcept {
+WindowClass::WindowClass(int width, int height, const wchar_t* name) noexcept : width(width), height(height) {
 	//calculating window size via client region size
 	RECT wr;
 	wr.left = 100;
@@ -37,6 +69,7 @@ WindowClass::WindowClass(int width, int height, const wchar_t* name) noexcept {
 	wr.top = 100;
 	wr.bottom = height + wr.top;
 	AdjustWindowRect(&wr, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE);
+	
 	//create window
 	hwnd = CreateWindow(
 		SingleWindow::GetName(), name,

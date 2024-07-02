@@ -134,10 +134,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="windowclass.cpp" />
+    <ClCompile Include="basicerror.cpp" />
     <ClCompile Include="winmain.cpp" />
     <ClCompile Include="winmessagemap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="basicerror.h" />
     <ClInclude Include="mainwin.h" />
     <ClInclude Include="windowclass.h" />
     <ClInclude Include="winmessagemap.h" />
