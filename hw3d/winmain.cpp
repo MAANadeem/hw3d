@@ -1,4 +1,4 @@
-#include "windowclass.h"
+#include "app.h"
 #include <string>
 
 //NOTES:
@@ -13,19 +13,7 @@ The second is a function call to actually make a window
 
 int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	try {
-		WindowClass wnd(600, 400, L"Hardware 3D");
-		MSG msg;
-		BOOL gResult;
-		while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0) {
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		//if getmessage itself fails
-		if (gResult == -1) {
-			return -1;
-		}
-		//value passed to PostQuitMessage
-		return (int)msg.wParam;
+		App{}.Run();
 	}
 	catch (const BasicError& e) {
 		MessageBoxA(nullptr, e.what(), e.GetType(), MB_OK);

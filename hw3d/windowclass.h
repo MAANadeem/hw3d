@@ -2,6 +2,9 @@
 
 #include "mainwin.h"
 #include "basicerror.h"
+#include "keyboard.h"
+#include "mouse.h"
+#include <optional>
 
 class WindowClass {
 public:
@@ -34,10 +37,16 @@ private:
 public:
 	WindowClass(int, int, const wchar_t*) noexcept;
 	~WindowClass();
+	WindowClass(const WindowClass&) = delete;
+	void SetTitle(const std::string& title);
+	static std::optional<int> ProcessMessages();
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND, UINT, WPARAM, LPARAM) noexcept;
 	static LRESULT CALLBACK HandleMsgThunk(HWND, UINT, WPARAM, LPARAM) noexcept;
 	LRESULT HandleMsg(HWND, UINT, WPARAM, LPARAM) noexcept;
+public:
+	Keyboard kbd;
+	Mouse mouse;
 private:
 	int width;
 	int height;
