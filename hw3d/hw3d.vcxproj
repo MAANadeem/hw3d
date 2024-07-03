@@ -134,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app.cpp" />
+    <ClCompile Include="graphics.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="timer.cpp" />
@@ -145,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="app.h" />
     <ClInclude Include="basicerror.h" />
+    <ClInclude Include="graphics.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="mainwin.h" />
     <ClInclude Include="mouse.h" />

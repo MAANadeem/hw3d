@@ -1,5 +1,4 @@
 #include "app.h"
-#include <iomanip>
 
 App::App() : wnd(600, 400, L"Hardware 3D") {}
 int App::Run() {
@@ -12,5 +11,7 @@ int App::Run() {
 }
 
 void App::Frame() {
-	
+	const float c = sin(timer.Peek()) / 2.0f + 0.5f;
+	wnd.Gfx().ClearBuffer(c, c, 1.0f);
+	wnd.Gfx().EndFrame();
 }

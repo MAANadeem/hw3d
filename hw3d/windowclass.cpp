@@ -78,6 +78,9 @@ WindowClass::WindowClass(int width, int height, const wchar_t* name) noexcept : 
 		nullptr, nullptr, SingleWindow::GetInstance(), this);
 	//show window
 	ShowWindow(hwnd, SW_SHOWDEFAULT);
+
+	//create graphics object
+	pGfx = std::make_unique<Graphics>(hwnd);
 }
 WindowClass::~WindowClass() {
 	DestroyWindow(hwnd);
@@ -206,3 +209,5 @@ std::optional<int> WindowClass::ProcessMessages() {
 	//return empty optional when not quitting app
 	return {};
 }
+
+Graphics& WindowClass::Gfx() { return *pGfx; }

@@ -4,7 +4,9 @@
 #include "basicerror.h"
 #include "keyboard.h"
 #include "mouse.h"
+#include "graphics.h"
 #include <optional>
+#include <memory>
 
 class WindowClass {
 public:
@@ -40,6 +42,7 @@ public:
 	WindowClass(const WindowClass&) = delete;
 	void SetTitle(const std::string& title);
 	static std::optional<int> ProcessMessages();
+	Graphics& Gfx();
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND, UINT, WPARAM, LPARAM) noexcept;
 	static LRESULT CALLBACK HandleMsgThunk(HWND, UINT, WPARAM, LPARAM) noexcept;
@@ -47,6 +50,7 @@ private:
 public:
 	Keyboard kbd;
 	Mouse mouse;
+	std::unique_ptr<Graphics> pGfx;
 private:
 	int width;
 	int height;
