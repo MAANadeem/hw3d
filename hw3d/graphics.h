@@ -3,8 +3,25 @@
 #include <d3d11.h>
 #include <wrl.h>
 #include <vector>
+#include <comdef.h>
+#include <d3dcompiler.h>
+#include "basicerror.h"
+#include "macros.h"
 
 class Graphics {
+	friend class Bindable;
+public:
+	class Exception : public BasicError {
+	public:
+		Exception(int line, const char* file, HRESULT hr) noexcept;
+		const char* what() const noexcept override;
+		const char* GetType() const noexcept override;
+		HRESULT GetErrorCode() const noexcept;
+		std::string GetErrorDescription() const noexcept;
+		std::string GetErrorInfo() const noexcept;
+	private:
+		HRESULT hr = CoInitializeEx(nullptr, COINITBASE_MULTITHREADED);
+	};
 public:
 	Graphics(HWND hwnd);
 	Graphics(const Graphics&) = delete;

@@ -3,7 +3,6 @@
 #include <string>
 #include <sstream>
 
-
 class BasicError : public std::exception {
 public:
 	BasicError(int, const char*) noexcept;

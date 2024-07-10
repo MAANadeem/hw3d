@@ -1,7 +1,8 @@
 #include "graphics.h"
-#include <d3dcompiler.h>
 #include <cmath>
 #include <DirectXMath.h>
+#include "macros.h"
+#include "pipelineparts.h"
 
 namespace wrl = Microsoft::WRL;
 namespace dx = DirectX;
@@ -10,6 +11,8 @@ namespace dx = DirectX;
 #pragma comment (lib, "D3DCompiler.lib")
 
 Graphics::Graphics(HWND hwnd) {
+	STARTUP();
+
 	DXGI_SWAP_CHAIN_DESC sd = {};
 	sd.BufferDesc.Width = 0;
 	sd.BufferDesc.Height = 0;
@@ -30,11 +33,11 @@ Graphics::Graphics(HWND hwnd) {
 	//ComPtr overloads the & operator, but with the added
 	//side effect of calling Release() before giving the reference
 	//if just the reference is needed, call GetAddress()
-	D3D11CreateDeviceAndSwapChain(
+	GFX_THROW(D3D11CreateDeviceAndSwapChain(
 		nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, D3D11_CREATE_DEVICE_DEBUG,
 		nullptr, 0, D3D11_SDK_VERSION, &sd, &swap, &device,
 		nullptr, &context
-	);
+	));
 
 	wrl::ComPtr<ID3D11Resource> pBackBuffer = nullptr;
 	swap->GetBuffer(0, __uuidof(ID3D11Resource), &pBackBuffer);
@@ -87,6 +90,7 @@ void Graphics::ClearBuffer(float r, float g, float b) noexcept {
 
 void Graphics::DrawTestTriangle(float angle, float x, float z) {
 	namespace wrl = Microsoft::WRL;
+	STARTUP();
 
 	struct Vertex { 
 		struct {
@@ -154,38 +158,25 @@ void Graphics::DrawTestTriangle(float angle, float x, float z) {
 	vbd.StructureByteStride = sizeof(Vertex);
 	D3D11_SUBRESOURCE_DATA sd = {};
 	sd.pSysMem = vertices;
-	device->CreateBuffer(&vbd, &sd, &vertexBuffer);
+	GFX_THROW(device->CreateBuffer(&vbd, &sd, &vertexBuffer));
 
 	const UINT stride = sizeof(Vertex);
 	const UINT offset = 0u;
 	context->IASetVertexBuffers(0u, 1u, vertexBuffer.GetAddressOf(), &stride, &offset);
 
 	//create and bind pixel shader
-	wrl::ComPtr<ID3D11PixelShader> ps;
-	wrl::ComPtr<ID3DBlob> b;
-	D3DReadFileToBlob(L"pixelshader.cso", &b);
-	device->CreatePixelShader(b->GetBufferPointer(),
-		b->GetBufferSize(), nullptr, &ps);
-	context->PSSetShader(ps.Get(), nullptr, 0u);
-	
-	//create and bind vertex shader
-	wrl::ComPtr<ID3D11VertexShader> vs;
-	D3DReadFileToBlob(L"vertexshader.cso", &b);
-	device->CreateVertexShader(b->GetBufferPointer(),
-		b->GetBufferSize(), nullptr, &vs);
-	context->VSSetShader(vs.Get(), nullptr, 0u);
+	auto ps1 = std::make_unique<PixelShader>(*this, L"pixelshader.cso");
+	ps1->Bind(*this);
+
+	//wrl::ComPtr<ID3D11VertexShader> vs;
+	auto vs = std::make_unique<VertexShader>(*this, L"vertexshader.cso");
+	vs->Bind(*this);
 
 	//input layout
-	wrl::ComPtr<ID3D11InputLayout> il;
-	const D3D11_INPUT_ELEMENT_DESC ied[] = {
+	const std::vector<D3D11_INPUT_ELEMENT_DESC> ied = {
 		{"Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
 	};
-	device->CreateInputLayout(
-		ied, std::size(ied), 
-		b->GetBufferPointer(), 
-		b->GetBufferSize(), 
-		&il
-	);
+	auto il = std::make_unique<InputLayout>(*this, ied, vs->GetByteCode());
 
 	//create index buffer
 	wrl::ComPtr<ID3D11Buffer> indexBuffer;
@@ -229,13 +220,14 @@ void Graphics::DrawTestTriangle(float angle, float x, float z) {
 	context->PSSetConstantBuffers(0u, 1u, constantBuffer2.GetAddressOf());
 
 	//bind input layout
-	context->IASetInputLayout(il.Get());
+	il->Bind(*this);
 
 	//bind index buffer
 	context->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 
 	//set primitive topology
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	auto tp = std::make_unique<Topology>(*this, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	tp->Bind(*this);
 
 	//configure viewport
 	D3D11_VIEWPORT vp;
@@ -248,4 +240,49 @@ void Graphics::DrawTestTriangle(float angle, float x, float z) {
 	context->RSSetViewports(1u, &vp);
 
 	context->DrawIndexed(std::size(indices), 0u, 0u);
+}
+
+Graphics::Exception::Exception(int line, const char* file, HRESULT hr) noexcept 
+: BasicError(line, file), hr(hr){}
+
+const char* Graphics::Exception::what() const noexcept
+{
+	std::ostringstream oss;
+	oss << GetType() << std::endl
+		<< "[Error Code] 0x" << std::hex << std::uppercase << GetErrorCode()
+		<< std::dec << " (" << (unsigned long)GetErrorCode() << ")" << std::endl
+		<< "[Description] " << GetErrorDescription() << std::endl
+		<< "[Info] " << GetErrorInfo() << std::endl;
+	oss << GetOriginString();
+	whatBuffer = oss.str();
+	return whatBuffer.c_str();
+}
+
+const char* Graphics::Exception::GetType() const noexcept { return "Graphics Exception"; }
+HRESULT Graphics::Exception::GetErrorCode() const noexcept{ return hr; }
+
+std::string Graphics::Exception::GetErrorDescription() const noexcept {
+	_com_error err(GetErrorCode());
+	const wchar_t* wideErrorMsg = err.ErrorMessage();
+
+	// Convert wchar_t* to std::string
+	std::wstring wideStr(wideErrorMsg);
+	std::string errorMsg(wideStr.begin(), wideStr.end());
+
+	return errorMsg;
+}
+
+std::string Graphics::Exception::GetErrorInfo() const noexcept {
+	_com_error err(GetErrorCode());
+	IErrorInfo* info = err.ErrorInfo();
+	BSTR des;
+	if (SUCCEEDED(info->GetDescription(&des))) {
+		std::wstring wideStr(des);
+		std::string errorInfo(wideStr.begin(), wideStr.end());
+		SysFreeString(des);
+		return errorInfo;
+	}
+	else {
+		return "No Info";
+	}
 }

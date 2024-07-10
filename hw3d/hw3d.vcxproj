@@ -134,10 +134,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="app.cpp" />
+    <ClCompile Include="bindable.cpp" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="inputlayout.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="mouse.cpp" />
+    <ClCompile Include="pixelshader.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="topology.cpp" />
+    <ClCompile Include="vertexshader.cpp" />
     <ClCompile Include="windowclass.cpp" />
     <ClCompile Include="basicerror.cpp" />
     <ClCompile Include="winmain.cpp" />
@@ -146,12 +151,19 @@
   <ItemGroup>
     <ClInclude Include="app.h" />
     <ClInclude Include="basicerror.h" />
+    <ClInclude Include="bindable.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="inputlayout.h" />
     <ClInclude Include="keyboard.h" />
+    <ClInclude Include="macros.h" />
     <ClInclude Include="mainwin.h" />
     <ClInclude Include="mouse.h" />
+    <ClInclude Include="pipelineparts.h" />
+    <ClInclude Include="pixelshader.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="topology.h" />
+    <ClInclude Include="vertexshader.h" />
     <ClInclude Include="windowclass.h" />
     <ClInclude Include="winmessagemap.h" />
   </ItemGroup>
