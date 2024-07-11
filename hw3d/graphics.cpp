@@ -77,6 +77,16 @@ Graphics::Graphics(HWND hwnd) {
 	device->CreateDepthStencilView(depthStencil.Get(), &ddsv, &dsv);
 
 	context->OMSetRenderTargets(1u, target.GetAddressOf(), dsv.Get());
+
+	// configure viewport
+	D3D11_VIEWPORT vp;
+	vp.Width = 800.0f;
+	vp.Height = 600.0f;
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	vp.TopLeftX = 0.0f;
+	vp.TopLeftY = 0.0f;
+	context->RSSetViewports(1u, &vp);
 }
 void Graphics::EndFrame() {
 	swap->Present(2u, 0u);
@@ -92,12 +102,7 @@ void Graphics::DrawTestTriangle(float angle, float x, float z) {
 	namespace wrl = Microsoft::WRL;
 	STARTUP();
 
-	struct Vertex { 
-		struct {
-			float x, y, z;
-		} pos;
-	};
-	const Vertex vertices[] = {
+	const std::vector<Vertex> vertices = {
 		{-1.0f, -1.0f, -1.0f},
 		{1.0f, -1.0f, -1.0f},
 		{-1.0f, 1.0f, -1.0f},
@@ -107,7 +112,7 @@ void Graphics::DrawTestTriangle(float angle, float x, float z) {
 		{-1.0f, 1.0f, 1.0f},
 		{1.0f, 1.0f, 1.0f},
 	};
-	unsigned int indices[] = {
+	std::vector<unsigned short> indices = {
 		0,2,1,  2,3,1,
 		1,3,5,  3,7,5,
 		2,6,3,  3,6,7,
@@ -148,21 +153,8 @@ void Graphics::DrawTestTriangle(float angle, float x, float z) {
 	};
 
 	//create vertex buffer
-	wrl::ComPtr<ID3D11Buffer> vertexBuffer;
-	D3D11_BUFFER_DESC vbd = {};
-	vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vbd.Usage = D3D11_USAGE_DEFAULT;
-	vbd.CPUAccessFlags = 0u;
-	vbd.MiscFlags = 0u;
-	vbd.ByteWidth = sizeof(vertices);
-	vbd.StructureByteStride = sizeof(Vertex);
-	D3D11_SUBRESOURCE_DATA sd = {};
-	sd.pSysMem = vertices;
-	GFX_THROW(device->CreateBuffer(&vbd, &sd, &vertexBuffer));
-
-	const UINT stride = sizeof(Vertex);
-	const UINT offset = 0u;
-	context->IASetVertexBuffers(0u, 1u, vertexBuffer.GetAddressOf(), &stride, &offset);
+	auto vb = std::make_unique<VertexBuffer>(*this, vertices);
+	vb->Bind(*this);
 
 	//create and bind pixel shader
 	auto ps1 = std::make_unique<PixelShader>(*this, L"pixelshader.cso");
@@ -179,51 +171,19 @@ void Graphics::DrawTestTriangle(float angle, float x, float z) {
 	auto il = std::make_unique<InputLayout>(*this, ied, vs->GetByteCode());
 
 	//create index buffer
-	wrl::ComPtr<ID3D11Buffer> indexBuffer;
-	D3D11_BUFFER_DESC ibd = {};
-	ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	ibd.Usage = D3D11_USAGE_DEFAULT;
-	ibd.CPUAccessFlags = 0u;
-	ibd.MiscFlags = 0u;
-	ibd.ByteWidth = sizeof(indices);
-	D3D11_SUBRESOURCE_DATA sd2 = {};
-	sd2.pSysMem = indices;
-	device->CreateBuffer(&ibd, &sd2, &indexBuffer);
+	auto ib = std::make_unique<IndexBuffer>(*this, indices);
 
-	//create constant buffer
-	wrl::ComPtr<ID3D11Buffer> constantBuffer;
-	D3D11_BUFFER_DESC cbd = {};
-	cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	cbd.Usage = D3D11_USAGE_DYNAMIC;
-	cbd.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
-	cbd.MiscFlags = 0u;
-	cbd.ByteWidth = sizeof(cb);
-	cbd.StructureByteStride = 0u;
-	D3D11_SUBRESOURCE_DATA sd3 = {};
-	sd3.pSysMem = &cb;
-	device->CreateBuffer(&cbd, &sd3, &constantBuffer);
-
-	//create second constant buffer
-	wrl::ComPtr<ID3D11Buffer> constantBuffer2;
-	D3D11_BUFFER_DESC cbd2 = {};
-	cbd2.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	cbd2.Usage = D3D11_USAGE_DEFAULT;
-	cbd2.CPUAccessFlags = 0u;
-	cbd2.MiscFlags = 0u;
-	cbd2.ByteWidth = sizeof(cb2);
-	cbd2.StructureByteStride = 0u;
-	D3D11_SUBRESOURCE_DATA sd4 = {};
-	sd4.pSysMem = &cb2;
-	device->CreateBuffer(&cbd2, &sd4, &constantBuffer2);
-
-	context->VSSetConstantBuffers(0u, 1u, constantBuffer.GetAddressOf());
-	context->PSSetConstantBuffers(0u, 1u, constantBuffer2.GetAddressOf());
+	//create constant buffers
+	auto vcb = std::make_unique<ConstantBuffer<CBuffer>>(*this, 'v', cb);
+	vcb->Bind(*this);
+	auto pcb = std::make_unique<ConstantBuffer<CB2>>(*this, 'p', cb2);
+	pcb->Bind(*this);
 
 	//bind input layout
 	il->Bind(*this);
 
 	//bind index buffer
-	context->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	ib->Bind(*this);
 
 	//set primitive topology
 	auto tp = std::make_unique<Topology>(*this, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -241,6 +201,12 @@ void Graphics::DrawTestTriangle(float angle, float x, float z) {
 
 	context->DrawIndexed(std::size(indices), 0u, 0u);
 }
+
+void Graphics::DrawIndexed(UINT indexCount) {
+	context->DrawIndexed(indexCount, 0u, 0u);
+}
+DirectX::XMMATRIX Graphics::GetProjection() { return projection; }
+void Graphics::SetProjection(DirectX::XMMATRIX proj) { projection = proj; }
 
 Graphics::Exception::Exception(int line, const char* file, HRESULT hr) noexcept 
 : BasicError(line, file), hr(hr){}

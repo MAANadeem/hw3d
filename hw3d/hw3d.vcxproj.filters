@@ -16,24 +16,30 @@
     <Filter Include="Shader Files">
       <UniqueIdentifier>{b2e5d55e-1666-4c90-8e28-5da9a6888c60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\WinAPISrc">
+      <UniqueIdentifier>{0b0f0a67-057a-464a-a9db-5f6af076b03b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\WinAPIH">
+      <UniqueIdentifier>{0ab43174-85d2-41f2-940d-dbad52fe1778}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BindableH">
+      <UniqueIdentifier>{fdd8f95e-43a8-45ec-bdf1-5ae0511a67a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DrawableH">
+      <UniqueIdentifier>{f540bf11-75ff-41cd-aa1e-a89a306cb7eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DrawableSrc">
+      <UniqueIdentifier>{55338e98-af99-43e9-9d42-adf944c2871e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BinableSrc">
+      <UniqueIdentifier>{0fdce746-3612-4fd6-9222-dd911622ab03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="winmessagemap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="windowclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="basicerror.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="keyboard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="app.cpp">
@@ -46,38 +52,50 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="bindable.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\BinableSrc</Filter>
     </ClCompile>
-    <ClCompile Include="vertexshader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="pixelshader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="topology.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="indexbuffer.cpp">
+      <Filter>Source Files\BinableSrc</Filter>
     </ClCompile>
     <ClCompile Include="inputlayout.cpp">
+      <Filter>Source Files\BinableSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="pixelshader.cpp">
+      <Filter>Source Files\BinableSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="topology.cpp">
+      <Filter>Source Files\BinableSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="vertexbuffer.cpp">
+      <Filter>Source Files\BinableSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="vertexshader.cpp">
+      <Filter>Source Files\BinableSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="windowclass.cpp">
+      <Filter>Source Files\WinAPISrc</Filter>
+    </ClCompile>
+    <ClCompile Include="winmessagemap.cpp">
+      <Filter>Source Files\WinAPISrc</Filter>
+    </ClCompile>
+    <ClCompile Include="mouse.cpp">
+      <Filter>Source Files\WinAPISrc</Filter>
+    </ClCompile>
+    <ClCompile Include="keyboard.cpp">
+      <Filter>Source Files\WinAPISrc</Filter>
+    </ClCompile>
+    <ClCompile Include="drawable.cpp">
+      <Filter>Source Files\DrawableSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="transbuffer.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cube.cpp">
+      <Filter>Source Files\DrawableSrc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mainwin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="windowclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="winmessagemap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="basicerror.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="keyboard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="app.h">
@@ -89,28 +107,61 @@
     <ClInclude Include="graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="bindable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vertexshader.h">
+    <ClInclude Include="vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pixelshader.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="constantbuffer.h">
+      <Filter>Header Files\BindableH</Filter>
     </ClInclude>
-    <ClInclude Include="pipelineparts.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="topology.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="indexbuffer.h">
+      <Filter>Header Files\BindableH</Filter>
     </ClInclude>
     <ClInclude Include="inputlayout.h">
+      <Filter>Header Files\BindableH</Filter>
+    </ClInclude>
+    <ClInclude Include="pipelineparts.h">
+      <Filter>Header Files\BindableH</Filter>
+    </ClInclude>
+    <ClInclude Include="pixelshader.h">
+      <Filter>Header Files\BindableH</Filter>
+    </ClInclude>
+    <ClInclude Include="topology.h">
+      <Filter>Header Files\BindableH</Filter>
+    </ClInclude>
+    <ClInclude Include="vertexbuffer.h">
+      <Filter>Header Files\BindableH</Filter>
+    </ClInclude>
+    <ClInclude Include="vertexshader.h">
+      <Filter>Header Files\BindableH</Filter>
+    </ClInclude>
+    <ClInclude Include="bindable.h">
+      <Filter>Header Files\BindableH</Filter>
+    </ClInclude>
+    <ClInclude Include="keyboard.h">
+      <Filter>Header Files\WinAPIH</Filter>
+    </ClInclude>
+    <ClInclude Include="mainwin.h">
+      <Filter>Header Files\WinAPIH</Filter>
+    </ClInclude>
+    <ClInclude Include="mouse.h">
+      <Filter>Header Files\WinAPIH</Filter>
+    </ClInclude>
+    <ClInclude Include="windowclass.h">
+      <Filter>Header Files\WinAPIH</Filter>
+    </ClInclude>
+    <ClInclude Include="winmessagemap.h">
+      <Filter>Header Files\WinAPIH</Filter>
+    </ClInclude>
+    <ClInclude Include="drawable.h">
+      <Filter>Header Files\DrawableH</Filter>
+    </ClInclude>
+    <ClInclude Include="cube.h">
+      <Filter>Header Files\DrawableH</Filter>
+    </ClInclude>
+    <ClInclude Include="transbuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

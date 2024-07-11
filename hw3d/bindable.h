@@ -1,5 +1,6 @@
 #pragma once
 #include "graphics.h"
+#include "vertex.h"
 
 class Bindable {
 public:
