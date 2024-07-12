@@ -8,9 +8,9 @@ App::App() : wnd(800, 600, L"Hardware 3D") {
 	std::uniform_real_distribution<float> rdist(6.0f, 20.0f);
 	for (auto i = 0; i < 50; i++)
 	{
-		cubes.push_back(std::make_unique<Cube>(
+		cylinders.push_back(std::make_unique<Cylinder>(
 			wnd.Gfx(), rng, adist,
-			ddist, odist, rdist
+			ddist, odist, rdist, 5
 		));
 	}
 	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
@@ -26,8 +26,8 @@ int App::Run() {
 
 void App::Frame() {
 	auto dt = timer.Mark();
-	wnd.Gfx().ClearBuffer(0.07f, 0.0f, 0.12f);
-	for (auto& c : cubes) {
+	wnd.Gfx().ClearBuffer(0.0f, 0.0f, 0.0f);
+	for (auto& c : cylinders) {
 		c->Update(dt);
 		c->Draw(wnd.Gfx());
 	}

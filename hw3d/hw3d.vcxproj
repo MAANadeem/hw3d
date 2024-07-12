@@ -136,6 +136,7 @@
     <ClCompile Include="app.cpp" />
     <ClCompile Include="bindable.cpp" />
     <ClCompile Include="cube.cpp" />
+    <ClCompile Include="cylinder.cpp" />
     <ClCompile Include="drawable.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="indexbuffer.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="bindable.h" />
     <ClInclude Include="constantbuffer.h" />
     <ClInclude Include="cube.h" />
+    <ClInclude Include="cylinder.h" />
     <ClInclude Include="drawable.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="indexbuffer.h" />

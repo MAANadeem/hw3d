@@ -93,6 +93,9 @@
     <ClCompile Include="cube.cpp">
       <Filter>Source Files\DrawableSrc</Filter>
     </ClCompile>
+    <ClCompile Include="cylinder.cpp">
+      <Filter>Source Files\DrawableSrc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basicerror.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="transbuffer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cylinder.h">
+      <Filter>Header Files\DrawableH</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
