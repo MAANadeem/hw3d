@@ -1,6 +1,14 @@
 #include "app.h"
 
 App::App() : wnd(800, 600, L"Hardware 3D") {
+
+	scenes.push_back(std::make_unique<SpinningCubes>(
+		wnd.Gfx()
+	));
+	scenes.push_back(std::make_unique<SpinningCyls>(
+		wnd.Gfx()
+	));
+	/*
 	std::mt19937 rng(std::random_device{}());
 	std::uniform_real_distribution<float> adist(0.0f, 3.1415f * 2.0f);
 	std::uniform_real_distribution<float> ddist(0.0f, 3.1415f * 2.0f);
@@ -14,6 +22,7 @@ App::App() : wnd(800, 600, L"Hardware 3D") {
 		));
 	}
 	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
+	*/
 }
 int App::Run() {
 	while (true) {
@@ -27,9 +36,18 @@ int App::Run() {
 void App::Frame() {
 	auto dt = timer.Mark();
 	wnd.Gfx().ClearBuffer(0.0f, 0.0f, 0.0f);
+	scenes[sceneNum]->Update(dt, wnd);
+	scenes[sceneNum]->Draw(wnd.Gfx());
+	if (wnd.kbd.KeyIsPressed(VK_TAB)) {
+		sceneNum = (sceneNum + 1) % scenes.size();
+	}
+	/*
 	for (auto& c : cylinders) {
-		c->Update(dt);
+		if (!wnd.kbd.KeyIsPressed(VK_SPACE)) {
+			c->Update(dt);
+		}
 		c->Draw(wnd.Gfx());
 	}
+	*/
 	wnd.Gfx().EndFrame();
 }

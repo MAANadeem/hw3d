@@ -34,6 +34,12 @@
     <Filter Include="Source Files\BinableSrc">
       <UniqueIdentifier>{0fdce746-3612-4fd6-9222-dd911622ab03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\SceneH">
+      <UniqueIdentifier>{bd2112d4-557d-4b1f-9328-0f29728b1423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SceneSrc">
+      <UniqueIdentifier>{d25f15d8-545e-4964-b85e-2115230899ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winmain.cpp">
@@ -95,6 +101,12 @@
     </ClCompile>
     <ClCompile Include="cylinder.cpp">
       <Filter>Source Files\DrawableSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="spincube.cpp">
+      <Filter>Source Files\SceneSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="spincyl.cpp">
+      <Filter>Source Files\SceneSrc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +181,18 @@
     </ClInclude>
     <ClInclude Include="cylinder.h">
       <Filter>Header Files\DrawableH</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>Header Files\SceneH</Filter>
+    </ClInclude>
+    <ClInclude Include="spincube.h">
+      <Filter>Header Files\SceneH</Filter>
+    </ClInclude>
+    <ClInclude Include="spincyl.h">
+      <Filter>Header Files\SceneH</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

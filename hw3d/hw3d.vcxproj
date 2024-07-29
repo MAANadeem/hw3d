@@ -144,6 +144,8 @@
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="pixelshader.cpp" />
+    <ClCompile Include="spincube.cpp" />
+    <ClCompile Include="spincyl.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="topology.cpp" />
     <ClCompile Include="transbuffer.cpp" />
@@ -171,6 +173,10 @@
     <ClInclude Include="mouse.h" />
     <ClInclude Include="pipelineparts.h" />
     <ClInclude Include="pixelshader.h" />
+    <ClInclude Include="scene.h" />
+    <ClInclude Include="spincube.h" />
+    <ClInclude Include="spincyl.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="topology.h" />
     <ClInclude Include="transbuffer.h" />

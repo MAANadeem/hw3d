@@ -3,6 +3,10 @@
 #include "timer.h"
 #include "cube.h"
 #include "cylinder.h"
+#include "scene.h"
+#include "spincube.h"
+#include "spincyl.h"
+
 class App {
 public:
 	App();
@@ -13,7 +17,6 @@ private:
 private:
 	WindowClass wnd;
 	Timer timer;
-	std::vector<std::unique_ptr<Cube>> cubes;
-	std::vector<std::unique_ptr<Cylinder>> cylinders;
-
+	std::vector<std::unique_ptr<Scene>> scenes;
+	int sceneNum = 0;
 };
