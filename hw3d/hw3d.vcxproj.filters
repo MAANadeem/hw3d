@@ -240,5 +240,8 @@
     <Image Include="16-Bit-Link.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="16-Bit-Mario.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

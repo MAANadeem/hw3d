@@ -1,7 +1,7 @@
 #include "texture.h"
 
 Texture::Texture(Graphics& gfx, const wchar_t* path) {
-    STARTUP();
+    HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
     Microsoft::WRL::ComPtr<ID3D11Resource> texture;
     GFX_THROW(CreateWICTextureFromFile(
         GetDevice(gfx),

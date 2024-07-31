@@ -24,23 +24,9 @@ Sheet::Sheet(Graphics& gfx,
 {
 	namespace dx = DirectX;
 
-	std::vector<Vertex> vertices = {
-		{-1.0f, -1.0f, -1.0f},
-		{-1.0f, 1.0f, -1.0f},
-		{1.0f, -1.0f, -1.0f},
-		{1.0f, 1.0f, -1.0f},
-	};
+	std::vector<Vertex> vertices;
+	std::vector<unsigned short> indices;
 
-	vertices[0].SetTexture(0.0f, 0.0f);
-	vertices[1].SetTexture(0.0f, 1.0f);
-	vertices[2].SetTexture(1.0f, 0.0f);
-	vertices[3].SetTexture(1.0f, 1.0f);
-
-	std::vector<unsigned short> indices = {
-		0,1,3, 0,3,2
-	};
-
-	/*
 	const auto base = Vertex(-1.0f, -1.0f, 0.0f);
 	float sizeX = 2.0 / (float)divX;
 	float sizeY = 2.0 / (float)divY;
@@ -62,10 +48,6 @@ Sheet::Sheet(Graphics& gfx,
 				(y + 1) * nVerticesX + x, 
 				(y + 1) * nVerticesX + x + 1
 			};
-			vertices[ia[0]].SetTexture(0.0f, 0.0f);
-			vertices[ia[1]].SetTexture(1.0f, 0.0f);
-			vertices[ia[2]].SetTexture(0.0f, 1.0f);
-			vertices[ia[3]].SetTexture(1.0f, 1.0f);
 
 			indices.push_back(ia[0]);
 			indices.push_back(ia[2]);
@@ -76,8 +58,13 @@ Sheet::Sheet(Graphics& gfx,
 			indices.push_back(ia[3]);
 		}
 	}
-	*/
-	auto tex = std::make_unique<Texture>(gfx, L"16-Bit-Link.png");
+
+	vertices[0].SetTexture(0.0f, 0.0f);
+	vertices[1].SetTexture(1.0f * divX, 0.0f);
+	vertices[2].SetTexture(0.0f, 1.0f * divY);
+	vertices[3].SetTexture(1.0f*divX, 1.0f*divY);
+
+	auto tex = std::make_unique<Texture>(gfx, L"16-Bit-Mario.png");
 
 	AddBind(std::move(tex));
 
@@ -92,6 +79,7 @@ Sheet::Sheet(Graphics& gfx,
 	AddBind(std::make_unique<PixelShader>(gfx, L"texturePS.cso"));
 
 	AddBind(std::make_unique<IndexBuffer>(gfx, indices));
+	indexCount = (UINT)indices.size();
 
 	const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
 	{

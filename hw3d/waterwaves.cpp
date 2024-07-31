@@ -6,7 +6,7 @@ Waves::Waves(Graphics& gfx) {
 	std::uniform_real_distribution<float> ddist(0.0f, 3.1415f * 2.0f);
 	std::uniform_real_distribution<float> odist(0.0f, 3.1415f * 0.3f);
 	std::uniform_real_distribution<float> rdist(6.0f, 20.0f);
-	for (auto i = 0; i < 5; i++) {
+	for (auto i = 0; i < 30; i++) {
 		objects.push_back(std::make_unique<Sheet>(
 			gfx, rng, adist,
 			ddist, odist, rdist, 1, 1
@@ -16,7 +16,7 @@ Waves::Waves(Graphics& gfx) {
 }
 
 void Waves::Update(float dt, WindowClass& wnd) {
-	wnd.Gfx().ClearBuffer(0.0f, 1.0f, 0.0f);
+	wnd.Gfx().ClearBuffer(1.0f, 1.0f, 1.0f);
 	for (auto& o : objects) {
 		o->Update(dt);
 	}
