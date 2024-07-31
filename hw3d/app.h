@@ -6,6 +6,7 @@
 #include "scene.h"
 #include "spincube.h"
 #include "spincyl.h"
+#include "waterwaves.h"
 
 class App {
 public:
@@ -19,4 +20,5 @@ private:
 	Timer timer;
 	std::vector<std::unique_ptr<Scene>> scenes;
 	int sceneNum = 0;
+	bool tabPressed = true;
 };

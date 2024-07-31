@@ -242,13 +242,13 @@ std::string Graphics::Exception::GetErrorInfo() const noexcept {
 	_com_error err(GetErrorCode());
 	IErrorInfo* info = err.ErrorInfo();
 	BSTR des;
-	if (SUCCEEDED(info->GetDescription(&des))) {
+	if (info && SUCCEEDED(info->GetDescription(&des))) {
 		std::wstring wideStr(des);
 		std::string errorInfo(wideStr.begin(), wideStr.end());
 		SysFreeString(des);
 		return errorInfo;
 	}
 	else {
-		return "No Info";
+		return "No Additional Info";
 	}
 }

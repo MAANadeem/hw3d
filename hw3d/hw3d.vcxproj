@@ -144,13 +144,18 @@
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="pixelshader.cpp" />
+    <ClCompile Include="sampler.cpp" />
+    <ClCompile Include="sheet.cpp" />
     <ClCompile Include="spincube.cpp" />
     <ClCompile Include="spincyl.cpp" />
+    <ClCompile Include="texture.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="topology.cpp" />
     <ClCompile Include="transbuffer.cpp" />
     <ClCompile Include="vertexbuffer.cpp" />
     <ClCompile Include="vertexshader.cpp" />
+    <ClCompile Include="waterwaves.cpp" />
+    <ClCompile Include="wictextureloader.cpp" />
     <ClCompile Include="windowclass.cpp" />
     <ClCompile Include="basicerror.cpp" />
     <ClCompile Include="winmain.cpp" />
@@ -173,7 +178,9 @@
     <ClInclude Include="mouse.h" />
     <ClInclude Include="pipelineparts.h" />
     <ClInclude Include="pixelshader.h" />
+    <ClInclude Include="sampler.h" />
     <ClInclude Include="scene.h" />
+    <ClInclude Include="sheet.h" />
     <ClInclude Include="spincube.h" />
     <ClInclude Include="spincyl.h" />
     <ClInclude Include="texture.h" />
@@ -183,6 +190,8 @@
     <ClInclude Include="vertex.h" />
     <ClInclude Include="vertexbuffer.h" />
     <ClInclude Include="vertexshader.h" />
+    <ClInclude Include="waterwaves.h" />
+    <ClInclude Include="wictextureloader.h" />
     <ClInclude Include="windowclass.h" />
     <ClInclude Include="winmessagemap.h" />
   </ItemGroup>
@@ -197,6 +206,22 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="texturePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="textureVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
     <FxCompile Include="vertexshader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
@@ -205,6 +230,9 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="16-Bit-Link.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

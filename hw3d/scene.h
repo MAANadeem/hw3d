@@ -2,6 +2,7 @@
 #include "windowclass.h"
 #include "cube.h"
 #include "cylinder.h"
+#include "sheet.h"
 
 class Scene {
 public:

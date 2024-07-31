@@ -18,6 +18,7 @@ SpinningCyls::SpinningCyls(Graphics& gfx) {
 }
 
 void SpinningCyls::Update(float dt, WindowClass& wnd) {
+	wnd.Gfx().ClearBuffer(1.0f, 1.0f, 1.0f);
 	for (auto& o : objects) {
 		o->Update(dt);
 	}

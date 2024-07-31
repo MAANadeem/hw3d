@@ -108,6 +108,21 @@
     <ClCompile Include="spincyl.cpp">
       <Filter>Source Files\SceneSrc</Filter>
     </ClCompile>
+    <ClCompile Include="waterwaves.cpp">
+      <Filter>Source Files\SceneSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="wictextureloader.cpp">
+      <Filter>Source Files\WinAPISrc</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>Source Files\BinableSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="sampler.cpp">
+      <Filter>Source Files\BinableSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="sheet.cpp">
+      <Filter>Source Files\DrawableSrc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basicerror.h">
@@ -176,14 +191,8 @@
     <ClInclude Include="cube.h">
       <Filter>Header Files\DrawableH</Filter>
     </ClInclude>
-    <ClInclude Include="transbuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="cylinder.h">
       <Filter>Header Files\DrawableH</Filter>
-    </ClInclude>
-    <ClInclude Include="texture.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="scene.h">
       <Filter>Header Files\SceneH</Filter>
@@ -194,6 +203,24 @@
     <ClInclude Include="spincyl.h">
       <Filter>Header Files\SceneH</Filter>
     </ClInclude>
+    <ClInclude Include="transbuffer.h">
+      <Filter>Header Files\BindableH</Filter>
+    </ClInclude>
+    <ClInclude Include="waterwaves.h">
+      <Filter>Header Files\SceneH</Filter>
+    </ClInclude>
+    <ClInclude Include="wictextureloader.h">
+      <Filter>Header Files\WinAPIH</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>Header Files\BindableH</Filter>
+    </ClInclude>
+    <ClInclude Include="sampler.h">
+      <Filter>Header Files\BindableH</Filter>
+    </ClInclude>
+    <ClInclude Include="sheet.h">
+      <Filter>Header Files\DrawableH</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="vertexshader.hlsl">
@@ -202,5 +229,16 @@
     <FxCompile Include="pixelshader.hlsl">
       <Filter>Shader Files</Filter>
     </FxCompile>
+    <FxCompile Include="textureVS.hlsl">
+      <Filter>Shader Files</Filter>
+    </FxCompile>
+    <FxCompile Include="texturePS.hlsl">
+      <Filter>Shader Files</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="16-Bit-Link.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

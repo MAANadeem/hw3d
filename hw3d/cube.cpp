@@ -85,7 +85,6 @@ Cube::Cube(Graphics& gfx,
 }
 
 
-
 void Cube::Update(float dt) noexcept {
 	roll += droll * dt;
 	pitch += dpitch * dt;

@@ -2,27 +2,15 @@
 
 App::App() : wnd(800, 600, L"Hardware 3D") {
 
+	scenes.push_back(std::make_unique<Waves>(
+		wnd.Gfx()
+	));
 	scenes.push_back(std::make_unique<SpinningCubes>(
 		wnd.Gfx()
 	));
 	scenes.push_back(std::make_unique<SpinningCyls>(
 		wnd.Gfx()
 	));
-	/*
-	std::mt19937 rng(std::random_device{}());
-	std::uniform_real_distribution<float> adist(0.0f, 3.1415f * 2.0f);
-	std::uniform_real_distribution<float> ddist(0.0f, 3.1415f * 2.0f);
-	std::uniform_real_distribution<float> odist(0.0f, 3.1415f * 0.3f);
-	std::uniform_real_distribution<float> rdist(6.0f, 20.0f);
-	for (auto i = 0; i < 50; i++)
-	{
-		cylinders.push_back(std::make_unique<Cylinder>(
-			wnd.Gfx(), rng, adist,
-			ddist, odist, rdist, 5
-		));
-	}
-	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
-	*/
 }
 int App::Run() {
 	while (true) {
@@ -35,19 +23,12 @@ int App::Run() {
 
 void App::Frame() {
 	auto dt = timer.Mark();
-	wnd.Gfx().ClearBuffer(0.0f, 0.0f, 0.0f);
 	scenes[sceneNum]->Update(dt, wnd);
 	scenes[sceneNum]->Draw(wnd.Gfx());
-	if (wnd.kbd.KeyIsPressed(VK_TAB)) {
+	bool changeScene = wnd.kbd.KeyIsPressed(VK_TAB);
+	if (changeScene && !tabPressed) {
 		sceneNum = (sceneNum + 1) % scenes.size();
 	}
-	/*
-	for (auto& c : cylinders) {
-		if (!wnd.kbd.KeyIsPressed(VK_SPACE)) {
-			c->Update(dt);
-		}
-		c->Draw(wnd.Gfx());
-	}
-	*/
+	tabPressed = changeScene;
 	wnd.Gfx().EndFrame();
 }
