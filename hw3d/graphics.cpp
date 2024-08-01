@@ -206,7 +206,9 @@ void Graphics::DrawIndexed(UINT indexCount) {
 	context->DrawIndexed(indexCount, 0u, 0u);
 }
 DirectX::XMMATRIX Graphics::GetProjection() { return projection; }
+DirectX::XMMATRIX Graphics::GetCamera() { return camera; }
 void Graphics::SetProjection(DirectX::XMMATRIX proj) { projection = proj; }
+void Graphics::SetCamera(DirectX::XMMATRIX cam) { camera = cam; }
 
 Graphics::Exception::Exception(int line, const char* file, HRESULT hr) noexcept 
 : BasicError(line, file), hr(hr){}

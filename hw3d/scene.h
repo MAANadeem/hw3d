@@ -3,6 +3,7 @@
 #include "cube.h"
 #include "cylinder.h"
 #include "sheet.h"
+#include "camera.h"
 
 class Scene {
 public:
@@ -11,4 +12,5 @@ public:
 	virtual ~Scene() = default;
 protected:
 	std::vector<std::unique_ptr<Drawable>> objects;
+	Camera cam;
 };

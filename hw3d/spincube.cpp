@@ -15,10 +15,13 @@ SpinningCubes::SpinningCubes(Graphics& gfx) {
 		));
 	}
 	gfx.SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
+	gfx.SetCamera(DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
 }
 
 void SpinningCubes::Update(float dt, WindowClass& wnd) {
 	wnd.Gfx().ClearBuffer(0.0f, 0.0f, 0.0f);
+	cam.Update(wnd);
+	wnd.Gfx().SetCamera(cam.GetMatrix());
 	for (auto& o : objects) {
 		o->Update(dt);
 	}

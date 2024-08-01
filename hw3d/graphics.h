@@ -32,14 +32,19 @@ public:
 	
 	void EndFrame();
 	void ClearBuffer(float, float, float) noexcept;
+
 	DirectX::XMMATRIX GetProjection();
+	DirectX::XMMATRIX GetCamera();
 	void SetProjection(DirectX::XMMATRIX proj);
+	void SetCamera(DirectX::XMMATRIX cam);
 
 	void DrawIndexed(UINT indexCount);
 
 	void DrawTestTriangle(float angle, float x, float y);
 private:
 	DirectX::XMMATRIX projection;
+	DirectX::XMMATRIX camera;
+
 	Microsoft::WRL::ComPtr<ID3D11Device> device;
 	Microsoft::WRL::ComPtr<IDXGISwapChain> swap;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;

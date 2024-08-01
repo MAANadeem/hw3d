@@ -123,6 +123,9 @@
     <ClCompile Include="sheet.cpp">
       <Filter>Source Files\DrawableSrc</Filter>
     </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basicerror.h">
@@ -220,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="sheet.h">
       <Filter>Header Files\DrawableH</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

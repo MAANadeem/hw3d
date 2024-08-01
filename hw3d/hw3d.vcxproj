@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="app.cpp" />
     <ClCompile Include="bindable.cpp" />
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="cylinder.cpp" />
     <ClCompile Include="drawable.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="app.h" />
     <ClInclude Include="basicerror.h" />
     <ClInclude Include="bindable.h" />
+    <ClInclude Include="camera.h" />
     <ClInclude Include="constantbuffer.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="cylinder.h" />
