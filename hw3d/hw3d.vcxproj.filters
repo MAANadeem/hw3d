@@ -93,9 +93,6 @@
     <ClCompile Include="drawable.cpp">
       <Filter>Source Files\DrawableSrc</Filter>
     </ClCompile>
-    <ClCompile Include="transbuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="cube.cpp">
       <Filter>Source Files\DrawableSrc</Filter>
     </ClCompile>
@@ -124,6 +121,12 @@
       <Filter>Source Files\DrawableSrc</Filter>
     </ClCompile>
     <ClCompile Include="camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="transbuffer.cpp">
+      <Filter>Source Files\BinableSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="particle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -225,6 +228,9 @@
       <Filter>Header Files\DrawableH</Filter>
     </ClInclude>
     <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="particle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

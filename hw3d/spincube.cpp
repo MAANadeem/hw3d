@@ -10,7 +10,7 @@ SpinningCubes::SpinningCubes(Graphics& gfx) {
 	for (auto i = 0; i < 50; i++)
 	{
 		objects.push_back(std::make_unique<Cube>(
-			gfx, rng, adist,
+			gfx, rng,
 			ddist, odist, rdist
 		));
 	}

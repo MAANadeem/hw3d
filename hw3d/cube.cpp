@@ -2,21 +2,19 @@
 
 Cube::Cube(Graphics& gfx,
 	std::mt19937& rng,
-	std::uniform_real_distribution<float>& adist,
 	std::uniform_real_distribution<float>& ddist,
 	std::uniform_real_distribution<float>& odist,
 	std::uniform_real_distribution<float>& rdist)
 	:
-	r(rdist(rng)),
+	x(rdist(rng)),
+	y(rdist(rng)),
+	z(rdist(rng)),
 	droll(ddist(rng)),
 	dpitch(ddist(rng)),
 	dyaw(ddist(rng)),
-	dphi(odist(rng)),
-	dtheta(odist(rng)),
-	dchi(odist(rng)),
-	chi(adist(rng)),
-	theta(adist(rng)),
-	phi(adist(rng))
+	dx(odist(rng)),
+	dy(odist(rng)),
+	dz(odist(rng))
 {
 
 	const std::vector<Vertex> vertices =
@@ -89,13 +87,21 @@ void Cube::Update(float dt) noexcept {
 	roll += droll * dt;
 	pitch += dpitch * dt;
 	yaw += dyaw * dt;
-	theta += dtheta * dt;
-	phi += dphi * dt;
-	chi += dchi * dt;
+	//x += dx * dt;
+	//y += dy * dt;
+	z -= dz * dt;
+}
+
+void Cube::Rotate(float velocity) {
+	namespace dx = DirectX;
+	dx::XMFLOAT4 newCoords;
+	dx::XMVECTOR temp = dx::XMVectorSet(x, y, z, 1.0f);
+	temp = dx::XMVector4Transform(temp, dx::XMMatrixRotationY(velocity));
+	dx::XMStoreFloat4(&newCoords, temp);
+	x = newCoords.x; y = newCoords.y, z = newCoords.z;
 }
 
 DirectX::XMMATRIX Cube::GetTransformXM() const noexcept {
 	return DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
-		DirectX::XMMatrixTranslation(r, 0.0f, 0.0f) *
-		DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi);
+		DirectX::XMMatrixTranslation(x, y, z);
 }

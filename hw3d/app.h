@@ -7,6 +7,7 @@
 #include "spincube.h"
 #include "spincyl.h"
 #include "waterwaves.h"
+#include "particle.h"
 
 class App {
 public:

@@ -2,15 +2,24 @@
 
 App::App() : wnd(800, 600, L"Hardware 3D") {
 
-	scenes.push_back(std::make_unique<Waves>(
+
+	scenes.push_back(std::make_unique<Particle>(
+		wnd.Gfx(), 6
+	));
+
+	scenes.push_back(std::make_unique<SpinningCubes>(
 		wnd.Gfx()
 	));
-	scenes.push_back(std::make_unique<SpinningCubes>(
+
+
+	/*
+	scenes.push_back(std::make_unique<Waves>(
 		wnd.Gfx()
 	));
 	scenes.push_back(std::make_unique<SpinningCyls>(
 		wnd.Gfx()
 	));
+	*/
 }
 int App::Run() {
 	while (true) {

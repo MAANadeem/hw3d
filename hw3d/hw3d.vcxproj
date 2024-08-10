@@ -144,6 +144,7 @@
     <ClCompile Include="inputlayout.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="mouse.cpp" />
+    <ClCompile Include="particle.cpp" />
     <ClCompile Include="pixelshader.cpp" />
     <ClCompile Include="sampler.cpp" />
     <ClCompile Include="sheet.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="macros.h" />
     <ClInclude Include="mainwin.h" />
     <ClInclude Include="mouse.h" />
+    <ClInclude Include="particle.h" />
     <ClInclude Include="pipelineparts.h" />
     <ClInclude Include="pixelshader.h" />
     <ClInclude Include="sampler.h" />
