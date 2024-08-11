@@ -1,6 +1,6 @@
 #include "cube.h"
 
-Cube::Cube(Graphics& gfx, float x, float y, float z, float width, float height, float depth)
+Cube::Cube(Graphics& gfx, float x, float y, float z, float width, float height, float depth, int col)
 	:
 	x(x),
 	y(y),
@@ -46,8 +46,10 @@ Cube::Cube(Graphics& gfx, float x, float y, float z, float width, float height, 
 	AddBind(std::make_unique<IndexBuffer>(gfx, indices));
 	indexCount = (UINT)indices.size();
 
-	struct ConstantBuffer2
+	struct alignas(16) Colors
 	{
+		int index;
+		float padding[3];
 		struct
 		{
 			float r;
@@ -56,18 +58,20 @@ Cube::Cube(Graphics& gfx, float x, float y, float z, float width, float height, 
 			float a;
 		} face_colors[6];
 	};
-	const ConstantBuffer2 cb2 =
-	{
+	const Colors cb2 =
+	{ 
+		col,
+		{0.0f, 0.0f, 0.0f},
 		{
-			{ 1.0f,0.0f,1.0f },
-			{ 1.0f,0.0f,0.0f },
-			{ 0.0f,1.0f,0.0f },
-			{ 0.0f,0.0f,1.0f },
-			{ 1.0f,1.0f,0.0f },
-			{ 0.0f,1.0f,1.0f },
+			{ 1.0f,0.0f,1.0f,1.0f },
+			{ 1.0f,0.0f,0.0f,1.0f },
+			{ 0.0f,1.0f,0.0f,1.0f },
+			{ 0.0f,0.0f,1.0f,1.0f },
+			{ 1.0f,1.0f,0.0f,1.0f },
+			{ 0.0f,1.0f,1.0f,1.0f },
 		}
 	};
-	AddBind(std::make_unique<ConstantBuffer<ConstantBuffer2>>(gfx, 'p', cb2));
+	AddBind(std::make_unique<ConstantBuffer<Colors>>(gfx, 'p', cb2));
 
 	const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
 	{

@@ -9,7 +9,7 @@ SpinningCubes::SpinningCubes(Graphics& gfx) {
 	{
 		objects.push_back(std::make_unique<Cube>(
 			gfx, rdist(rng), rdist(rng), rdist(rng),
-			ddist(rng), ddist(rng), ddist(rng)
+			ddist(rng), ddist(rng), ddist(rng), i
 		));
 	}
 	gfx.SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 80.0f));

@@ -5,7 +5,7 @@
 class Cube : public Drawable
 {
 public:
-	Cube(Graphics& gfx, float, float, float, float, float, float);
+	Cube(Graphics& gfx, float, float, float, float, float, float, int);
 	void Update(float dt) noexcept override;
 	void Rotate(float velocity);
 	DirectX::XMMATRIX GetTransformXM() const noexcept override;

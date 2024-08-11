@@ -10,13 +10,13 @@ Particle::Particle(Graphics& gfx, unsigned int num)
 	for (int i = 0; i < numCubes; ++i) {
 		particles.push_back(std::make_unique<Cube>(
 			gfx, rdist(rng), rdist(rng), rdist(rng),
-			ddist(rng), ddist(rng), ddist(rng)
+			ddist(rng), ddist(rng), ddist(rng), i
 		));
-		particles[i]->SetID(i + i);
+		particles[i]->SetID(i + 1);
 	}
 	particles.push_back(std::make_unique<Cube>(
 		gfx, 0.0f, 0.0f, 0.0f,
-		10.0f, 0.5f, 10.5f
+		10.0f, 0.5f, 10.5f, 0
 	));
 	gfx.SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
 	gfx.SetCamera(DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
