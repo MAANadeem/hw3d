@@ -3,19 +3,17 @@
 
 SpinningCubes::SpinningCubes(Graphics& gfx) {
 	std::mt19937 rng(std::random_device{}());
-	std::uniform_real_distribution<float> adist(0.0f, 3.1415f * 2.0f);
-	std::uniform_real_distribution<float> ddist(0.0f, 3.1415f * 2.0f);
-	std::uniform_real_distribution<float> odist(0.0f, 3.1415f * 0.3f);
+	std::uniform_real_distribution<float> ddist(1.0f, 3.0f);
 	std::uniform_real_distribution<float> rdist(6.0f, 20.0f);
 	for (auto i = 0; i < 50; i++)
 	{
 		objects.push_back(std::make_unique<Cube>(
-			gfx, rng,
-			ddist, odist, rdist
+			gfx, rdist(rng), rdist(rng), rdist(rng),
+			ddist(rng), ddist(rng), ddist(rng)
 		));
 	}
-	gfx.SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
-	gfx.SetCamera(DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
+	gfx.SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 80.0f));
+	gfx.SetCamera(DirectX::XMMatrixTranslation(0.0f, 0.0f, 0.0f));
 }
 
 void SpinningCubes::Update(float dt, WindowClass& wnd) {

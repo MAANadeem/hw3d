@@ -4,16 +4,20 @@ Particle::Particle(Graphics& gfx, unsigned int num)
 	: numCubes(num) {
 	
 	std::mt19937 rng(std::random_device{}());
-	std::uniform_real_distribution<float> ddist(0.0f, 0.0f);
-	std::uniform_real_distribution<float> odist(0.0f, 0.0f);
-	std::uniform_real_distribution<float> rdist(6.0f, 20.0f);
+	std::uniform_real_distribution<float> ddist(1.0f, 3.0f);
+	std::uniform_real_distribution<float> rdist(3.0f, 10.0f);
 
 	for (int i = 0; i < numCubes; ++i) {
 		particles.push_back(std::make_unique<Cube>(
-			gfx, rng,
-			ddist, odist, rdist
+			gfx, rdist(rng), rdist(rng), rdist(rng),
+			ddist(rng), ddist(rng), ddist(rng)
 		));
+		particles[i]->SetID(i + i);
 	}
+	particles.push_back(std::make_unique<Cube>(
+		gfx, 0.0f, 0.0f, 0.0f,
+		10.0f, 0.5f, 10.5f
+	));
 	gfx.SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
 	gfx.SetCamera(DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f));
 }
@@ -23,7 +27,7 @@ void Particle::Update(float dt, WindowClass& wnd) {
 	cam.Update(wnd);
 	wnd.Gfx().SetCamera(cam.GetMatrix());
 	for (auto& p : particles) {
-		p->Rotate(velocity);
+		if (p->GetID() != 0) p->Rotate(velocity);
 	}
 }
 

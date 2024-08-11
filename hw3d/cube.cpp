@@ -1,33 +1,31 @@
 #include "cube.h"
 
-Cube::Cube(Graphics& gfx,
-	std::mt19937& rng,
-	std::uniform_real_distribution<float>& ddist,
-	std::uniform_real_distribution<float>& odist,
-	std::uniform_real_distribution<float>& rdist)
+Cube::Cube(Graphics& gfx, float x, float y, float z, float width, float height, float depth)
 	:
-	x(rdist(rng)),
-	y(rdist(rng)),
-	z(rdist(rng)),
-	droll(ddist(rng)),
-	dpitch(ddist(rng)),
-	dyaw(ddist(rng)),
-	dx(odist(rng)),
-	dy(odist(rng)),
-	dz(odist(rng))
+	x(x),
+	y(y),
+	z(z),
+	width(width),
+	height(height),
+	depth(depth)
 {
+	//change vertices to match dimensions
+	const float sWidth = width / 2.0f;
+	const float sHeight = height / 2.0f;
+	const float sDepth = depth / 2.0f;
 
 	const std::vector<Vertex> vertices =
 	{
-		{ -1.0f,-1.0f,-1.0f },
-		{ 1.0f,-1.0f,-1.0f },
-		{ -1.0f,1.0f,-1.0f },
-		{ 1.0f,1.0f,-1.0f },
-		{ -1.0f,-1.0f,1.0f },
-		{ 1.0f,-1.0f,1.0f },
-		{ -1.0f,1.0f,1.0f },
-		{ 1.0f,1.0f,1.0f },
+		{ -sWidth, -sHeight, -sDepth },
+		{  sWidth, -sHeight, -sDepth },
+		{ -sWidth,  sHeight, -sDepth },
+		{  sWidth,  sHeight, -sDepth },
+		{ -sWidth, -sHeight,  sDepth },
+		{  sWidth, -sHeight,  sDepth },
+		{ -sWidth,  sHeight,  sDepth },
+		{  sWidth,  sHeight,  sDepth },
 	};
+
 	AddBind(std::make_unique<VertexBuffer>(gfx, vertices));
 
 	auto pvs = std::make_unique<VertexShader>(gfx, L"vertexshader.cso");
@@ -87,8 +85,8 @@ void Cube::Update(float dt) noexcept {
 	roll += droll * dt;
 	pitch += dpitch * dt;
 	yaw += dyaw * dt;
-	//x += dx * dt;
-	//y += dy * dt;
+	x += dx * dt;
+	y += dy * dt;
 	z -= dz * dt;
 }
 
@@ -105,3 +103,6 @@ DirectX::XMMATRIX Cube::GetTransformXM() const noexcept {
 	return DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
 		DirectX::XMMatrixTranslation(x, y, z);
 }
+
+unsigned int Cube::GetID() { return id; }
+void Cube::SetID(unsigned int newID) { id = newID; }
