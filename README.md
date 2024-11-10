@@ -22,7 +22,7 @@ A high-performance graphics simulation engine built with **C++**, **DirectX11**,
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/GraphicsSimulationEngine.git
+   git clone https://github.com/MAANadeem/GraphicsSimulationEngine.git
    cd GraphicsSimulationEngine
 2. Open the Visual Studio solution file (.sln), and ensure all dependencies are linked.
 3. Build the project and run the executable.
