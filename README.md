@@ -53,4 +53,4 @@ Future Enhancements:
 - Integration with modern physics engines (e.g., Bullet Physics)
 
 ## License
-This project is licensed under the MIT License. You may use, distribute, and modify this software under the terms of the MIT license. See LICENSE file for more details.
+This project is licensed under the GNU General Public License. You may use, distribute, and modify this software under the terms of the GNU license. See LICENSE file for more details.
